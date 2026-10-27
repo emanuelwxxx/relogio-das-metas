@@ -1,139 +1,929 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#fff5f7">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f8e9ef">
 <title>Relógio das Metas</title>
+
 <style>
-:root{--bg:#fff7f8;--card:#fffdfd;--pink:#d98da5;--deep:#a94f70;--pale:#f8e5eb;--ink:#503a42;--muted:#9a7d86;--line:#f0dce2}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:520px;margin:auto;padding:25px 17px 38px}
-header{display:flex;justify-content:space-between;align-items:center;margin:8px 2px 24px;gap:10px}
-.brand{font:22px Georgia,serif}.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:.17em;text-transform:uppercase;margin-top:5px}
-.pill{font-size:11px;color:var(--deep);background:var(--pale);padding:8px 10px;border-radius:30px;white-space:nowrap}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 10px 30px #914a630d;margin-bottom:14px}
-.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin:0 0 12px}
-.total{font:clamp(36px,10vw,53px) Georgia,serif;letter-spacing:-.04em;color:var(--deep);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.caption{font-size:12px;color:var(--muted);line-height:1.55;margin:10px 0 0}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.stat{background:#fff8fa;border:1px solid var(--line);border-radius:16px;padding:13px}
-.label{font-size:11px;color:var(--muted);margin-bottom:8px}.value{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
-h2{font:20px Georgia,serif;font-weight:400;margin:0}
-button{border:0;font:inherit;cursor:pointer}.add{background:var(--pale);color:var(--deep);border-radius:50%;width:35px;height:35px;font-size:22px}
-.small-button{background:var(--pale);color:var(--deep);padding:9px 11px;border-radius:12px;font-size:11px}
-.investment{padding:14px 0;border-top:1px solid var(--line)}.investment:first-child{border-top:0}
-.inv-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.inv-name{font-size:14px;font-weight:600;overflow-wrap:anywhere}.inv-rate{font-size:12px;color:var(--deep);white-space:nowrap}.inv-meta{font-size:11px;color:var(--muted);margin-top:5px}
-.inv-actions{display:flex;gap:12px;margin-top:9px}.text-btn{background:none;color:var(--muted);font-size:11px;padding:2px 0}.delete{color:#bd6c83}
-.goal-line{display:flex;justify-content:space-between;align-items:center;gap:8px}.goal-amount{font:23px Georgia,serif;color:var(--deep)}
-.track{height:8px;border-radius:20px;background:var(--pale);overflow:hidden;margin:15px 0 9px}.fill{height:100%;width:0;background:linear-gradient(90deg,#e8a9bc,#c96d8d);border-radius:20px;transition:width .3s}
-.labels{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}
-.note{font-size:11px;color:var(--muted);line-height:1.6;margin:12px 0 0}
-footer{text-align:center;color:var(--muted);font-size:10px;line-height:1.7;padding:8px 12px}
-.modal{display:none;position:fixed;inset:0;background:#41253047;z-index:5;padding:16px;align-items:center;justify-content:center}.modal.open{display:flex}
-.dialog{width:100%;max-width:390px;background:var(--card);border-radius:22px;padding:22px;max-height:90vh;overflow:auto}.dialog h2{margin-bottom:16px}
-label{display:block;font-size:11px;color:var(--muted);margin:13px 0 6px}input,select{width:100%;border:1px solid var(--line);background:#fff9fa;border-radius:12px;padding:12px;color:var(--ink);font:inherit;font-size:14px}
-.actions{display:flex;gap:9px;margin-top:20px}.actions button{flex:1;padding:12px;border-radius:12px;font-size:13px}.cancel{background:#f8eff2;color:var(--muted)}.save{background:var(--deep);color:#fff}
-@media(min-width:520px){main{padding-top:36px}}
+:root {
+  --bg: #fff8fb;
+  --pink: #d96b98;
+  --dark: #a94470;
+  --light: #f8e0eb;
+  --text: #382a32;
+  --muted: #8b7a83;
+  --border: #f0dce5;
+  --green: #4e8c70;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 22px 16px 36px;
+}
+
+.wrap {
+  max-width: 620px;
+  margin: auto;
+}
+
+header {
+  padding: 8px 4px 20px;
+}
+
+.eyebrow {
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(28px, 7vw, 36px);
+  letter-spacing: -.04em;
+  margin: 8px 0;
+}
+
+.subtitle,
+.small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 20px;
+  margin: 12px 0;
+  box-shadow: 0 8px 28px #73395212;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.amount {
+  font-size: clamp(32px, 9vw, 44px);
+  font-weight: 750;
+  letter-spacing: -.05em;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.rate,
+.income {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cent {
+  background: var(--light);
+  padding: 15px;
+  border-radius: 16px;
+  margin-top: 16px;
+}
+
+.cent-title {
+  color: var(--dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cent-time {
+  font-size: 21px;
+  font-weight: 750;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.track {
+  height: 9px;
+  background: #f3e7ed;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e7a3bf, var(--pink));
+  width: 0;
+  transition: width .2s ease;
+}
+
+.title {
+  font-size: 17px;
+  margin: 0 0 14px;
+}
+
+.investment {
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.detail {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+  line-height: 1.45;
+}
+
+.actions,
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 13px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  background: var(--pink);
+  color: white;
+}
+
+.soft {
+  background: var(--light);
+  color: var(--dark);
+}
+
+.plain {
+  background: #f7f1f4;
+  color: var(--text);
+}
+
+.danger {
+  background: #fff0f0;
+  color: #a23d4b;
+}
+
+.row button {
+  flex: 1;
+  min-width: 120px;
+}
+
+label {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+  margin: 12px 0 6px;
+}
+
+input,
+select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fffafd;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--light);
+  border-color: var(--pink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.form-actions button {
+  flex: 1;
+}
+
+.note {
+  background: #fff9e9;
+  border: 1px solid #f2e4b8;
+  color: #75602a;
+  padding: 12px;
+  border-radius: 13px;
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 12px;
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 16px;
+}
+
+@media (max-width: 380px) {
+  .card {
+    padding: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .income {
+    white-space: normal;
+  }
+}
 </style>
 </head>
+
 <body>
-<main>
-<header><div class="brand">Relógio das Metas<small>seu dinheiro em movimento</small></div><div class="pill">♡ longo prazo</div></header>
+<main class="wrap">
+
+<header>
+  <div class="eyebrow">Seu patrimônio em movimento</div>
+  <h1>Relógio das Metas</h1>
+  <p class="subtitle">
+    Acompanhe a estimativa dos rendimentos dos seus investimentos,
+    segundo a segundo.
+  </p>
+</header>
+
 <section class="card">
-<p class="eyebrow">Rendimentos acumulados</p>
-<div class="total" id="total">R$ 0,00</div>
-<p class="caption">Estimativa baseada nos rendimentos cadastrados. O contador se atualiza enquanto esta página está aberta e recalcula o tempo decorrido quando você volta.</p>
+  <div class="label">Rendimentos acumulados estimados</div>
+  <div class="amount" id="total">R$ 0,00</div>
+  <div class="rate" id="daily">R$ 0,00 por dia</div>
+
+  <div class="cent">
+    <div class="cent-title">PRÓXIMO CENTAVO EM</div>
+    <div class="cent-time" id="next">Calculando…</div>
+    <p class="small">
+      Estimativa baseada nas taxas informadas. O rendimento real pode variar.
+    </p>
+  </div>
 </section>
-<section class="stats">
-<div class="stat"><div class="label">Rendimento por dia</div><div class="value" id="daily">R$ 0,00</div></div>
-<div class="stat"><div class="label">Patrimônio cadastrado</div><div class="value" id="principal">R$ 0,00</div></div>
-<div class="stat"><div class="label">Estimativa mensal</div><div class="value" id="monthly">R$ 0,00</div></div>
-<div class="stat"><div class="label">Próximo centavo em</div><div class="value" id="next">—</div></div>
-</section>
+
 <section class="card">
-<div class="section-head"><h2>Minha meta</h2><button class="small-button" id="editGoal">Editar meta</button></div>
-<div class="goal-line"><span class="eyebrow" style="margin:0">Objetivo financeiro</span><span class="goal-amount" id="goalText">R$ 100.000,00</span></div>
-<div class="track"><div class="fill" id="fill"></div></div>
-<div class="labels"><span id="invested">R$ 0,00 investidos</span><span id="percent">0,00%</span></div>
+  <div class="progress-head">
+    <span class="label">Progresso da meta</span>
+    <strong id="pct">0%</strong>
+  </div>
+
+  <div class="track">
+    <div class="fill" id="fill"></div>
+  </div>
+
+  <div class="progress-head">
+    <span class="small" id="current">R$ 0,00 acumulados</span>
+    <strong id="goalText">Meta: R$ 100.000,00</strong>
+  </div>
+
+  <label for="goalInput">Editar meta (R$)</label>
+
+  <div class="row">
+    <input
+      id="goalInput"
+      type="number"
+      min="0.01"
+      step="0.01"
+      inputmode="decimal"
+    >
+    <button class="soft" id="saveGoal">Salvar meta</button>
+  </div>
 </section>
+
 <section class="card">
-<div class="section-head"><h2>Meus investimentos</h2><button class="add" id="add" aria-label="Adicionar investimento">+</button></div>
-<div id="list"></div>
-<p class="note">Você pode adicionar, editar ou excluir investimentos. Os rendimentos são estimativas, não cotações ao vivo nem dinheiro efetivamente creditado a cada segundo.</p>
+  <h2 class="title">Meus investimentos</h2>
+
+  <div id="list"></div>
+
+  <div class="row">
+    <button class="primary" id="add">
+      + Adicionar investimento
+    </button>
+  </div>
 </section>
-<section class="card"><h2>Sobre o relógio</h2><p class="caption">O contador começa em R$ 0,00 na primeira utilização. Ele estima rendimentos proporcionais ao tempo, inclusive quando o aplicativo está fechado. Os dados ficam salvos neste navegador; evite limpar os dados do Safari sem fazer uma cópia das informações.</p></section>
-<footer>feito para acompanhar o progresso, um centavo de cada vez ♡<br>Adicione esta página à Tela de Início do iPhone para acessá-la como um app.</footer>
+
+<section class="card hidden" id="formCard">
+  <h2 class="title" id="formTitle">Adicionar investimento</h2>
+
+  <form id="form">
+    <input id="itemId" type="hidden">
+
+    <label for="name">Nome</label>
+    <input
+      id="name"
+      maxlength="80"
+      required
+      placeholder="Ex.: CDB, FII, ações"
+    >
+
+    <div class="grid">
+      <div>
+        <label for="principal">Valor investido (R$)</label>
+        <input
+          id="principal"
+          type="number"
+          min="0"
+          step="0.01"
+          inputmode="decimal"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="rate">Rendimento informado (R$)</label>
+        <input
+          id="rate"
+          type="number"
+          min="0"
+          step="0.0001"
+          inputmode="decimal"
+          required
+        >
+      </div>
+    </div>
+
+    <label for="period">Esse rendimento é por</label>
+    <select id="period">
+      <option value="day">Dia</option>
+      <option value="month">Mês (estimativa de 30 dias)</option>
+    </select>
+
+    <div class="form-actions">
+      <button class="primary" type="submit">
+        Salvar investimento
+      </button>
+      <button class="plain" type="button" id="cancel">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</section>
+
+<section class="card">
+  <h2 class="title">Dados e segurança</h2>
+
+  <p class="small">
+    Os dados ficam salvos localmente neste navegador ou dispositivo.
+    Atualizar o site no mesmo endereço normalmente mantém seus dados.
+    Exporte um backup por segurança.
+  </p>
+
+  <div class="row">
+    <button class="soft" id="export">Exportar backup</button>
+    <button class="plain" id="import">Restaurar backup</button>
+    <input
+      class="hidden"
+      type="file"
+      id="file"
+      accept="application/json,.json"
+    >
+  </div>
+
+  <div class="note">
+    Este relógio faz uma estimativa matemática e não consulta os rendimentos
+    reais das instituições. Confira as taxas periodicamente.
+  </div>
+</section>
+
+<div class="footer">
+  Relógio das Metas · acompanhamento financeiro
+</div>
+
 </main>
 
-<div class="modal" id="invModal"><form class="dialog" id="invForm">
-<h2 id="invTitle">Novo investimento</h2><input type="hidden" id="invId">
-<label for="name">Nome do investimento</label><input id="name" maxlength="60" required placeholder="Ex.: Caixinha Nubank">
-<label for="amount">Valor investido (R$)</label><input id="amount" type="number" min="0" step="0.01" required placeholder="0,00">
-<label for="rate">Rendimento (R$)</label><input id="rate" type="number" min="0" step="0.0001" required placeholder="Ex.: 1,99">
-<label for="period">Frequência do rendimento</label><select id="period"><option value="day">Por dia</option><option value="month">Por mês (30 dias)</option></select>
-<div class="actions"><button type="button" class="cancel" id="cancelInv">Cancelar</button><button class="save" type="submit">Salvar</button></div>
-</form></div>
-<div class="modal" id="goalModal"><form class="dialog" id="goalForm"><h2>Editar meta financeira</h2>
-<label for="goalInput">Valor da meta (R$)</label><input id="goalInput" type="number" min="1" step="0.01" required>
-<div class="actions"><button type="button" class="cancel" id="cancelGoal">Cancelar</button><button class="save" type="submit">Salvar meta</button></div></form></div>
-
 <script>
-const fmt=n=>(Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const safe=n=>Math.max(0,Number(n)||0);
-const defaults={goal:100000,investments:[
-{id:'nubank',name:'Caixinha Nubank',principal:5068.03,rate:1.99,period:'day'},
-{id:'fiis',name:'Fundos imobiliários',principal:1853,rate:0.60,period:'day'}
-],accrued:0,lastTimestamp:Date.now()};
-let state;
-try{state=JSON.parse(localStorage.getItem('relogioMetas'))||defaults}catch(e){state=defaults}
-if(!Array.isArray(state.investments))state.investments=[];
-if(!Number.isFinite(state.accrued))state.accrued=0;
-if(!Number.isFinite(state.lastTimestamp))state.lastTimestamp=Date.now();
-function dailyRate(i){return safe(i.rate)/(i.period==='month'?30:1)}
-function daily(){return state.investments.reduce((s,i)=>s+dailyRate(i),0)}
-function principal(){return state.investments.reduce((s,i)=>s+safe(i.principal),0)}
-function accrued(){return state.accrued+daily()*Math.max(0,Date.now()-state.lastTimestamp)/86400000}
-function save(){localStorage.setItem('relogioMetas',JSON.stringify(state))}
-function resetClock(){state.accrued=accrued();state.lastTimestamp=Date.now();save()}
-function duration(s){s=Math.max(0,Math.ceil(s));if(s<60)return s+' s';let m=Math.floor(s/60),r=s%60;if(m<60)return m+' min '+r+' s';let h=Math.floor(m/60),rm=m%60;if(h<24)return h+' h '+rm+' min';return Math.floor(h/24)+' d '+h%24+' h'}
-function render(){
- const a=accrued(),d=daily(),p=principal();
- document.getElementById('total').textContent=fmt(a);
- document.getElementById('daily').textContent=fmt(d);
- document.getElementById('principal').textContent=fmt(p);
- document.getElementById('monthly').textContent=fmt(d*30);
- const cent=(a*100)%1, secs=d>0?((0.01-cent+1e-8)%0.01)/d*86400:null;
- document.getElementById('next').textContent=secs===null?'—':duration(secs);
- document.getElementById('goalText').textContent=fmt(state.goal);
- const pct=state.goal>0?Math.min(100,p/state.goal*100):0;
- document.getElementById('fill').style.width=pct+'%';
- document.getElementById('invested').textContent=fmt(p)+' investidos';
- document.getElementById('percent').textContent=pct.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
- const list=document.getElementById('list');list.innerHTML='';
- if(!state.investments.length){list.innerHTML='<p class="caption">Nenhum investimento cadastrado. Toque no + para adicionar um.</p>';return}
- state.investments.forEach(i=>{
-  const row=document.createElement('div');row.className='investment';
-  row.innerHTML='<div class="inv-top"><div><div class="inv-name"></div><div class="inv-meta"></div></div><div class="inv-rate"></div></div><div class="inv-actions"><button class="text-btn edit">Editar</button><button class="text-btn delete">Excluir</button></div>';
-  row.querySelector('.inv-name').textContent=i.name;
-  row.querySelector('.inv-meta').textContent='Patrimônio: '+fmt(i.principal);
-  row.querySelector('.inv-rate').textContent=fmt(dailyRate(i))+'/dia';
-  row.querySelector('.edit').onclick=()=>openInv(i);
-  row.querySelector('.delete').onclick=()=>{if(confirm('Excluir "'+i.name+'"?')){resetClock();state.investments=state.investments.filter(x=>x.id!==i.id);save();render()}};
-  list.appendChild(row);
- });
-}
-const invModal=document.getElementById('invModal'),goalModal=document.getElementById('goalModal');
-function openInv(i=null){document.getElementById('invTitle').textContent=i?'Editar investimento':'Novo investimento';document.getElementById('invId').value=i?i.id:'';document.getElementById('name').value=i?i.name:'';document.getElementById('amount').value=i?i.principal:'';document.getElementById('rate').value=i?i.rate:'';document.getElementById('period').value=i?i.period:'day';invModal.classList.add('open')}
-document.getElementById('add').onclick=()=>openInv();
-document.getElementById('cancelInv').onclick=()=>invModal.classList.remove('open');
-document.getElementById('invForm').onsubmit=e=>{e.preventDefault();const id=document.getElementById('invId').value;const item={id:id||'inv-'+Date.now(),name:document.getElementById('name').value.trim(),principal:safe(document.getElementById('amount').value),rate:safe(document.getElementById('rate').value),period:document.getElementById('period').value};resetClock();if(id)state.investments=state.investments.map(x=>x.id===id?item:x);else state.investments.push(item);save();invModal.classList.remove('open');render()};
-document.getElementById('editGoal').onclick=()=>{document.getElementById('goalInput').value=state.goal;goalModal.classList.add('open')};
-document.getElementById('cancelGoal').onclick=()=>goalModal.classList.remove('open');
-document.getElementById('goalForm').onsubmit=e=>{e.preventDefault();state.goal=Math.max(1,safe(document.getElementById('goalInput').value));save();goalModal.classList.remove('open');render()};
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
-window.addEventListener('pageshow',render);
-render();setInterval(render,100);
+(() => {
+
+  /*
+   * IMPORTANTE:
+   * Esta é a mesma chave usada na versão anterior.
+   * Não altere "relogioMetas", para manter a compatibilidade
+   * com os dados já salvos no navegador.
+   */
+
+  const KEY = 'relogioMetas';
+
+  const defaults = {
+    goal: 100000,
+
+    investments: [
+      {
+        id: 'nubank',
+        name: 'Caixinha Nubank',
+        principal: 5068.03,
+        rate: 1.99,
+        period: 'day'
+      },
+      {
+        id: 'fiis',
+        name: 'Fundos imobiliários',
+        principal: 1853,
+        rate: 0.60,
+        period: 'day'
+      }
+    ],
+
+    accrued: 0,
+    lastTimestamp: Date.now()
+  };
+
+  const $ = id => document.getElementById(id);
+  const n = value => Number(value) || 0;
+
+  const money = value =>
+    (Number.isFinite(value) ? value : 0).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(KEY));
+
+      if (!saved || !Array.isArray(saved.investments)) {
+        return clone(defaults);
+      }
+
+      return {
+        goal: n(saved.goal) > 0 ? n(saved.goal) : 100000,
+
+        investments: saved.investments.map((item, index) => ({
+          id: String(item.id ?? 'inv-' + index),
+          name: String(item.name ?? 'Investimento'),
+          principal: Math.max(0, n(item.principal)),
+          rate: Math.max(0, n(item.rate)),
+          period: item.period === 'month' ? 'month' : 'day'
+        })),
+
+        accrued: Math.max(0, n(saved.accrued)),
+
+        lastTimestamp:
+          n(saved.lastTimestamp) > 0
+            ? n(saved.lastTimestamp)
+            : Date.now()
+      };
+
+    } catch (error) {
+      return clone(defaults);
+    }
+  }
+
+  let state = load();
+
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (error) {
+      console.warn('Não foi possível salvar os dados localmente.');
+    }
+  }
+
+  // Converte os rendimentos cadastrados para uma estimativa diária.
+  function perDay() {
+    return state.investments.reduce((sum, item) => {
+      return sum + item.rate / (item.period === 'month' ? 30 : 1);
+    }, 0);
+  }
+
+  // Calcula o acumulado desde a última atualização registrada.
+  function accruedNow() {
+    const elapsed = Math.max(0, Date.now() - state.lastTimestamp);
+
+    return state.accrued + perDay() * elapsed / 86400000;
+  }
+
+  // Registra o acumulado e atualiza o horário de referência.
+  function checkpoint() {
+    state.accrued = accruedNow();
+    state.lastTimestamp = Date.now();
+    save();
+  }
+
+  function duration(value) {
+    if (!Number.isFinite(value) || value < 0) {
+      return '—';
+    }
+
+    let seconds = Math.ceil(value);
+
+    const days = Math.floor(seconds / 86400);
+    seconds %= 86400;
+
+    const hours = Math.floor(seconds / 3600);
+    seconds %= 3600;
+
+    const minutes = Math.floor(seconds / 60);
+    seconds %= 60;
+
+    const parts = [];
+
+    if (days) parts.push(days + 'd');
+    if (hours || days) parts.push(hours + 'h');
+    if (minutes || hours || days) parts.push(minutes + 'min');
+
+    parts.push(seconds + 's');
+
+    return parts.join(' ');
+  }
+
+  function render() {
+    const accrued = accruedNow();
+    const daily = perDay();
+
+    $('total').textContent = money(accrued);
+    $('daily').textContent = money(daily) + ' por dia';
+    $('goalInput').value = state.goal;
+
+    /*
+     * CORREÇÃO DO CONTADOR:
+     * Calcula quanto falta para alcançar o próximo centavo inteiro.
+     * Exemplo: se o acumulado estiver em R$ 0,127, a próxima marca
+     * é R$ 0,13.
+     */
+
+    if (daily <= 0) {
+      $('next').textContent = 'Adicione um rendimento';
+
+    } else {
+      const nextBoundary =
+        (Math.floor((accrued + 1e-10) * 100) + 1) / 100;
+
+      const remaining = Math.max(0, nextBoundary - accrued);
+
+      const seconds = remaining / daily * 86400;
+
+      $('next').textContent = duration(seconds);
+    }
+
+    // Atualiza o progresso da meta.
+    const percentage = state.goal > 0
+      ? Math.min(100, Math.max(0, accrued / state.goal * 100))
+      : 0;
+
+    $('pct').textContent =
+      percentage.toLocaleString('pt-BR', {
+        maximumFractionDigits: 4
+      }) + '%';
+
+    $('fill').style.width = percentage + '%';
+
+    $('current').textContent = money(accrued) + ' acumulados';
+
+    $('goalText').textContent = 'Meta: ' + money(state.goal);
+
+    // Lista os investimentos cadastrados.
+    const list = $('list');
+
+    list.innerHTML = '';
+
+    if (!state.investments.length) {
+      const empty = document.createElement('p');
+
+      empty.className = 'small';
+      empty.textContent = 'Nenhum investimento cadastrado ainda.';
+
+      list.append(empty);
+    }
+
+    state.investments.forEach(item => {
+
+      const article = document.createElement('article');
+      article.className = 'investment';
+
+      const top = document.createElement('div');
+      top.className = 'top';
+
+      const info = document.createElement('div');
+
+      const name = document.createElement('div');
+      name.className = 'name';
+      name.textContent = item.name;
+
+      const detail = document.createElement('div');
+      detail.className = 'detail';
+
+      detail.textContent =
+        money(item.principal) +
+        ' investidos · ' +
+        money(item.rate) +
+        ' por ' +
+        (item.period === 'month' ? 'mês' : 'dia');
+
+      info.append(name, detail);
+
+      const income = document.createElement('div');
+      income.className = 'income';
+
+      income.textContent =
+        money(item.rate / (item.period === 'month' ? 30 : 1)) +
+        '/dia';
+
+      top.append(info, income);
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+
+      const edit = document.createElement('button');
+
+      edit.className = 'soft';
+      edit.textContent = 'Editar';
+      edit.onclick = () => openForm(item.id);
+
+      const removeButton = document.createElement('button');
+
+      removeButton.className = 'danger';
+      removeButton.textContent = 'Excluir';
+      removeButton.onclick = () => removeInvestment(item.id);
+
+      actions.append(edit, removeButton);
+
+      article.append(top, actions);
+
+      list.append(article);
+    });
+  }
+
+  // Abre o formulário para adicionar ou editar um investimento.
+  function openForm(id = '') {
+    $('form').reset();
+    $('itemId').value = id;
+
+    if (id) {
+      const item = state.investments.find(value => value.id === id);
+
+      if (!item) return;
+
+      $('formTitle').textContent = 'Editar investimento';
+      $('name').value = item.name;
+      $('principal').value = item.principal;
+      $('rate').value = item.rate;
+      $('period').value = item.period;
+
+    } else {
+      $('formTitle').textContent = 'Adicionar investimento';
+      $('period').value = 'day';
+    }
+
+    $('formCard').classList.remove('hidden');
+
+    $('formCard').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+  function closeForm() {
+    $('formCard').classList.add('hidden');
+    $('form').reset();
+  }
+
+  function removeInvestment(id) {
+    const item = state.investments.find(value => value.id === id);
+
+    if (!item) return;
+
+    const confirmed = confirm(
+      'Excluir "' + item.name +
+      '"? O rendimento já acumulado será mantido.'
+    );
+
+    if (!confirmed) return;
+
+    checkpoint();
+
+    state.investments = state.investments.filter(
+      value => value.id !== id
+    );
+
+    save();
+    render();
+  }
+
+  // Salva a meta financeira.
+  $('saveGoal').onclick = () => {
+    const goal = n($('goalInput').value);
+
+    if (goal <= 0) {
+      alert('Digite uma meta maior que zero.');
+      return;
+    }
+
+    checkpoint();
+
+    state.goal = goal;
+
+    save();
+    render();
+  };
+
+  $('add').onclick = () => openForm();
+
+  $('cancel').onclick = closeForm;
+
+  // Salva um investimento novo ou as alterações de um investimento.
+  $('form').onsubmit = event => {
+    event.preventDefault();
+
+    const id = $('itemId').value;
+
+    const item = {
+      id: id || 'inv-' + Date.now() + '-' +
+        Math.random().toString(36).slice(2, 7),
+
+      name: $('name').value.trim(),
+
+      principal: Math.max(0, n($('principal').value)),
+
+      rate: Math.max(0, n($('rate').value)),
+
+      period: $('period').value
+    };
+
+    if (!item.name) {
+      alert('Digite um nome para o investimento.');
+      return;
+    }
+
+    checkpoint();
+
+    if (id) {
+      const index = state.investments.findIndex(
+        value => value.id === id
+      );
+
+      if (index >= 0) {
+        state.investments[index] = item;
+      }
+
+    } else {
+      state.investments.push(item);
+    }
+
+    save();
+    closeForm();
+    render();
+  };
+
+  // Exporta um backup dos dados para um arquivo JSON.
+  $('export').onclick = () => {
+    checkpoint();
+
+    const blob = new Blob(
+      [JSON.stringify(state, null, 2)],
+      { type: 'application/json' }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'backup-relogio-das-metas.json';
+
+    document.body.append(link);
+
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  // Abre o seletor de arquivos para restaurar um backup.
+  $('import').onclick = () => $('file').click();
+
+  $('file').onchange = async event => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    try {
+      const imported = JSON.parse(await file.text());
+
+      if (
+        !imported ||
+        !Array.isArray(imported.investments) ||
+        !Number.isFinite(Number(imported.goal))
+      ) {
+        throw new Error('Arquivo inválido');
+      }
+
+      const confirmed = confirm(
+        'Restaurar este backup substituirá os dados atuais. Continuar?'
+      );
+
+      if (!confirmed) return;
+
+      state = {
+        goal: Math.max(0.01, n(imported.goal)),
+
+        investments: imported.investments.map((item, index) => ({
+          id: String(item.id ?? 'inv-' + index),
+          name: String(item.name ?? 'Investimento'),
+          principal: Math.max(0, n(item.principal)),
+          rate: Math.max(0, n(item.rate)),
+          period: item.period === 'month' ? 'month' : 'day'
+        })),
+
+        accrued: Math.max(0, n(imported.accrued)),
+
+        lastTimestamp:
+          n(imported.lastTimestamp) > 0
+            ? n(imported.lastTimestamp)
+            : Date.now()
+      };
+
+      save();
+      render();
+
+      alert('Backup restaurado.');
+
+    } catch (error) {
+      alert(
+        'Não foi possível ler esse backup. ' +
+        'Selecione um arquivo JSON exportado pelo Relógio das Metas.'
+      );
+
+    } finally {
+      event.target.value = '';
+    }
+  };
+
+  // Primeira atualização da tela.
+  render();
+
+  // Atualiza o contador visual quatro vezes por segundo.
+  setInterval(render, 250);
+
+  // Salva o acumulado periodicamente.
+  setInterval(checkpoint, 30000);
+
+  // Ao sair da página, registra o horário e o acumulado.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      checkpoint();
+    } else {
+      render();
+    }
+  });
+
+  window.addEventListener('pagehide', checkpoint);
+
+})();
 </script>
-</body></html>
+
+</body>
+</html>
