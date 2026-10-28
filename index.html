@@ -757,21 +757,24 @@ $('total').textContent = money(accrued);
   }
 
   // Salva a meta financeira.
-  $('saveGoal').onclick = () => {
-    const goal = n($('goalInput').value);
+$('saveGoal').onclick = () => {
+  const input = $('goalInput');
+  const goal = Number(input.value);
 
-    if (goal <= 0) {
-      alert('Digite uma meta maior que zero.');
-      return;
-    }
+  if (!Number.isFinite(goal) || goal <= 0) {
+    alert('Digite uma meta maior que zero.');
+    input.focus();
+    return;
+  }
 
-    checkpoint();
+  checkpoint();
 
-    state.goal = goal;
+  state.goal = goal;
+  save();
+  render();
 
-    save();
-    render();
-  };
+  input.blur();
+};
 
   $('add').onclick = () => openForm();
 
