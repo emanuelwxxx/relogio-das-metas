@@ -600,13 +600,16 @@ select:focus {
 
     } else {
       const nextBoundary =
-        (Math.floor((accrued + 1e-10) * 100) + 1) / 100;
+  (Math.floor((accrued + 1e-9) * 100) + 1) / 100;
 
-      const remaining = Math.max(0, nextBoundary - accrued);
+const remaining = Math.max(0, nextBoundary - accrued);
 
-      const seconds = remaining / daily * 86400;
+const seconds = remaining / daily * 86400;
 
-      $('next').textContent = duration(seconds);
+$('next').textContent = duration(seconds);
+
+// Atualiza o valor visual com precisão de centavos.
+$('total').textContent = money(accrued);
     }
 
     // Atualiza o progresso da meta.
